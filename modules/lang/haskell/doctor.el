@@ -14,3 +14,7 @@
 (unless (executable-find "hindent")
   (warn! "Couldn't find hindent. hindent-mode won't work"))
 
+(when (featurep! +lsp)
+  (unless (executable-find "hie")
+    (warn! "Couldnt find the Haskell IDE Engine. LSP support will not work.")))
+
