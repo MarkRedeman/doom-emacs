@@ -4,9 +4,13 @@
 (package! haskell-mode)
 
 ;;
-(cond ((featurep! +dante)
-       (package! dante))
+(cond
+ ((featurep! +lsp) (depends-on! :tools lsp
+                                (package! lsp-haskell)))
+ ((featurep! +dante)
+       (package! dante)
+       (when (featurep! :completion company)
+         (package! company-ghc)))
       (t
        (package! intero)
        (package! hindent)))
-
