@@ -14,3 +14,4 @@
 ;;   :recipe
 ;;   (:fetcher url :url "https://raw.githubusercontent.com/facebook/hhvm/master/hphp/hack/editor-plugins/emacs/hack-mode.el"))
 
+(package! flycheck-phpstan)
