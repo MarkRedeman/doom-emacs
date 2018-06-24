@@ -92,3 +92,16 @@
   :modes (web-mode php-mode)
   :files ("composer.json"))
 
+(def-package! flycheck-phpstan
+  :after php-mode
+  :config
+  (defun flycheck-phpstan-setup ()
+    "Setup Flycheck Phpstan.
+Add `phpstan' to `flycheck-checkers'."
+    (interactive)
+    (add-to-list 'flycheck-checkers 'phpstan))
+
+  (add-hook 'flycheck-mode-hook #'flycheck-phpstan-setup)
+  (add-hook 'php-mode-hook
+            (lambda () (flycheck-select-checker 'phpstan))))
+
