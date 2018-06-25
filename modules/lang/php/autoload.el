@@ -13,3 +13,8 @@ ignore the cache."
                                  (require 'json)
                                  (json-read-file package-file))))
             (puthash project-root data +php-composer-conf))))))
+
+;; Only enable phpstan, phpactor etc. if they are either globally available
+;; or if they are locally available
+(defun +php/maybe-enable-phpstan ())
+(defun +php/maybe-enable-phpactor ())
