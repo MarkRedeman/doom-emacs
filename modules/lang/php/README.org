@@ -10,6 +10,8 @@ This module adds support for PHP 5.3+ (including PHP7).
 + Support for ~laravel~ and ~composer~ projects (with project-specific snippets)
 + [[../../feature/file-templates/templates/php-mode][File templates]]
 + [[https://github.com/hlissner/emacs-snippets/tree/master/php-mode][Snippets]]
++ phpstan
++ phpmd (https://github.com/phpmd/phpmd) phpcs (https://github.com/FriendsOfPHP/PHP-CS-Fixer)
 
 #+begin_quote
 PHP was the first programming language I got paid to code in, back in the Cretaceous period (2003). My sincerest apologies go out to all the programmers who inherited my earliest PHP work. I know you're out there, writhing in your straitjackets.
@@ -18,9 +20,9 @@ Save a programmer today. Stop a friend from choosing PHP as their first language
 #+end_quote
 
 * Table of Contents :TOC:
-- [[#install][Install]]
-  - [[#php][PHP]]
-  - [[#dependencies][Dependencies]]
+- [[Install][Install]]
+  - [[PHP][PHP]]
+  - [[Dependencies][Dependencies]]
 
 * Install
 ** PHP
@@ -46,12 +48,14 @@ The features in this module optionally depend on the following php packages:
 + ~boris~ (REPL)
 + ~phpctags~ (better code completion)
 + ~phpunit~ (unit test commands)
++ ~language-server~
 
 #+BEGIN_SRC sh
 composer global require \
     d11wtq/boris \
     phpunit/phpunit \
-    techlivezheng/phpctags
+    techlivezheng/phpctags \
+    felixfbecker/language-server
 #+END_SRC
 
 Ensure that ~\~/.composer/vendor/bin~ is in ~PATH~:
@@ -59,4 +63,8 @@ Ensure that ~\~/.composer/vendor/bin~ is in ~PATH~:
 #+BEGIN_SRC sh
 # place this in your profile file, like ~/.bash_profile or ~/.zshenv
 export PATH="~/.composer/vendor/bin:$PATH"
+#+END_SRC
+
+#+BEGIN_SRC sh
+composer global run-script --working-dir=vendor/felixfbecker/language-server parse-stubs
 #+END_SRC
