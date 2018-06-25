@@ -12,6 +12,9 @@
   :mode "\\.inc\\'"
   :interpreter "php"
   :config
+  (add-hook! php-mode 'flycheck-mode)
+  (add-hook 'php-mode-hook 'php-enable-psr2-coding-style)
+
   ;; Disable HTML compatibility in php-mode. `web-mode' has superior support for
   ;; php+html. Use the .phtml
   (setq php-template-compatibility nil)
@@ -43,6 +46,16 @@
           :n "a"  #'phpunit-current-class
           :n "s"  #'phpunit-current-test)))
 
+;; !!!!!!!!!!!!!!!!!!
+;; (if (featurep! +lsp) (require! :tools lsp))
+;; (def-package! lsp-typescript
+;;   :when (featurep! +lsp)
+;;   :hook ((js2-mode typescript-mode) . lsp-typescript-enable))
+
+;; https://www.reddit.com/r/emacs/comments/7xz6bd/im_having_the_worst_time_trying_to_get_php/
+(def-package! lsp-php
+  :when (and (featurep! +lsp) (featurep! :tools lsp))
+  :hook (php-mode . lsp-php-enable))
 
 (def-package! php-refactor-mode
   :hook php-mode)
@@ -79,6 +92,13 @@
   (add-to-list '+php--company-backends 'company-ac-php-backend nil #'eq)
   :config (setq ac-php-tags-path (concat doom-cache-dir "ac-php/")))
 
+  ;; (add-hook 'php-mode-hook #'ac-php-core-eldoc-setup)
+
+  ;; ac-php provides custom autocompletion, php-extras provides autocompletion
+  ;; for built-in libraries
+
+  ;; (set-company-backend! 'php-mode '(company-ac-php-backend php-extras-company))
+
 
 ;;
 ;; Projects
@@ -91,6 +111,22 @@
 (def-project-mode! +php-composer-mode
   :modes (web-mode php-mode)
   :files ("composer.json"))
+
+
+(def-package! ivy-phpunit
+  :after php-mode
+  :commands (ivy-phpunit-test-function ivy-phpunit-test-class ivy-phpunit-list-test-classes)
+  :config
+  (map! :map php-mode-map
+        :localleader
+        :prefix "t"
+        (:prefix "i"
+          :n "t"  #'ivy-phpunit-test-function
+          :n "c"  #'ivy-phpunit-test-class
+          :n "C"  #'ivy-phpunit-list-test-classes)))
+
+(def-package! helm-phpunit
+  :commands (helm-phpunit-select-test))
 
 (def-package! flycheck-phpstan
   :after php-mode
@@ -105,3 +141,20 @@ Add `phpstan' to `flycheck-checkers'."
   (add-hook 'php-mode-hook
             (lambda () (flycheck-select-checker 'phpstan))))
 
+(def-package! company-phpactor
+  :when (featurep! :completion company)
+  :commands (company-phpactor)
+  :config
+  (set-company-backend! 'php-mode '(company-phpactor)))
+
+(def-package! phpactor
+  :after php-mode
+  :config
+  (map! :map php-mode-map :localleader :prefix "rp" :desc "phpactor"
+        :n "g" #'phpactor-goto-definition
+        :n "c" #'company-phpactor))
+
+(def-package! php-cs-fixer
+          :commands (php-cs-fixer-fix)
+          :config
+          (setq-default php-cs-fixer-rules-level-part-options "@PSR2"))
