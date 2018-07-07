@@ -2,10 +2,13 @@
 ;;; lang/haskell/packages.el
 
 (package! haskell-mode)
-(package! hindent)
+(when (featurep! :completion company)
+  (package! company-ghc))
 
-(cond ((featurep! +dante)
-       (package! dante)
-       (package! attrap))
-      ((package! intero)))
-
+;;
+(cond ((featurep! +lsp) (depends-on! :tools lsp (package! lsp-haskell)))
+      ((featurep! +dante)
+       (package! dante))
+      (t
+       (package! intero)
+       (package! hindent)))
