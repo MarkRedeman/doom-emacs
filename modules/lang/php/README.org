@@ -7,6 +7,7 @@ This module adds support for PHP 5.3+ (including PHP7).
 + REPL (~php-boris~)
 + Code refactoring commands (~php-refactor-mode~)
 + Unit-test commands (~phpunit~)
++ Static analysis ([[https://github.com/emacs-php/phpstan.el][phpstan]])
 + Support for ~laravel~ and ~composer~ projects (with project-specific snippets)
 + [[../../editor/file-templates/templates/php-mode][File templates]]
 + [[https://github.com/hlissner/doom-snippets/tree/master/php-mode][Snippets]]

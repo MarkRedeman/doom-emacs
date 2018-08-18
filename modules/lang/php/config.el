@@ -45,6 +45,7 @@
         "a" #'phpunit-current-class
         "s" #'phpunit-current-test))
 
+(def-package! flycheck-phpstan :after php-mode)
 
 (use-package! phpactor
   :unless (featurep! +lsp)
