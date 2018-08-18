@@ -45,9 +45,22 @@
   (map! :localleader
         :map php-mode-map
         :prefix ("t" . "test")
-        "r" #'phpunit-current-project
-        "a" #'phpunit-current-class
-        "s" #'phpunit-current-test))
+        "r"  #'phpunit-current-project
+        "a"  #'phpunit-current-class
+        "s"  #'phpunit-current-test)
+
+  (map! :map php-mode-map
+        :localleader
+        :prefix "c"
+        :desc "Composer"
+        (:desc "Run composer"                "C"  #'composer
+         :desc "Run vendor/bin command"      "c"  #'composer-run-vendor-bin-command
+         :desc "Run script"                  "s"  #'composer-run-script
+         :desc "Require and install package" "i"  #'composer-install
+         :desc "Install package"             "r"  #'composer-require
+         :desc "Update packages"             "u"  #'composer-update
+         :desc "Open composer.json"          "o"  #'composer-find-json-file
+         :desc "Dumpautoload"                "d"  #'composer-dump-autoload)))
 
 (def-package! flycheck-phpstan :after php-mode)
 
