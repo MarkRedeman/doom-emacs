@@ -4,6 +4,7 @@
 (package! php-boris)
 (package! php-extras :recipe (:fetcher github :repo "arnested/php-extras"))
 (package! php-mode)
+(package! composer)
 (package! php-refactor-mode)
 (package! php-cs-fixer)
 (package! phpactor :recipe (:fetcher github :repo "emacs-php/phpactor.el" :files ("*.el")))
