@@ -5,6 +5,7 @@
 (package! php-extras :recipe (:fetcher github :repo "arnested/php-extras"))
 (package! php-mode)
 (package! php-refactor-mode)
+(package! php-cs-fixer)
 (package! phpactor :recipe (:fetcher github :repo "emacs-php/phpactor.el" :files ("*.el")))
 (package! flycheck-phpstan)
 (package! phpunit)

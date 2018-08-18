@@ -27,6 +27,10 @@
 
   (map! :localleader
         :map php-mode-map
+        :desc "Fix formatting" "f" #'php-cs-fixer-fix)
+
+  (map! :localleader
+        :map php-mode-map
         :prefix "t"
         "r" #'phpunit-current-project
         "a" #'phpunit-current-class
@@ -104,6 +108,9 @@
   :when (featurep! +hack)
   :mode "\\.hh$")
 
+(def-package! php-cs-fixer
+  :config
+  (add-hook 'before-save-hook 'php-cs-fixer-before-save))
 
 ;;
 ;; Projects
