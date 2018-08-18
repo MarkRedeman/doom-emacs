@@ -7,6 +7,7 @@
 (package! php-refactor-mode :pin "7a794b0618")
 (package! phpunit :pin "fe6bc91c3b")
 ;;(phpactor :recipe (:fetcher github :repo "emacs-php/phpactor.el" :files ("*.el")))
+(package! php-cs-fixer)
 (package! flycheck-phpstan)
 
 (when (featurep! +hack)
