@@ -32,6 +32,7 @@
         "a" #'phpunit-current-class
         "s" #'phpunit-current-test))
 
+(def-package! flycheck-phpstan :after php-mode)
 
 (def-package! phpactor
   :unless (featurep! +lsp)
@@ -114,4 +115,3 @@
 (def-project-mode! +php-composer-mode
   :modes (web-mode php-mode)
   :files ("composer.json"))
-
