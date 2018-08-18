@@ -24,8 +24,12 @@
     (sp-local-pair "<?"    "?>" :post-handlers '(("| " "SPC" "=") ("||\n[i]" "RET") ("[d2]" "p")))
     (sp-local-pair "<?php" "?>" :post-handlers '(("| " "SPC") ("||\n[i]" "RET"))))
 
-  (map! :localleader
-        :map php-mode-map
+  (map! :map php-mode-map
+        :localleader
+        :desc "Fix formatting" :n "f" #'php-cs-fixer-fix)
+
+  (map! :map php-mode-map
+        :localleader
         :prefix "t"
         "r"  #'phpunit-current-project
         "a"  #'phpunit-current-class
