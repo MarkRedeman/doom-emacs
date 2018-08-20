@@ -127,8 +127,11 @@
   :mode "\\.hh$")
 
 (def-package! php-cs-fixer
-  :config
-  (add-hook 'before-save-hook 'php-cs-fixer-before-save))
+  :after php-mode
+  :commands (php-cs-fixer-fix php-cs-fixer-before-save)
+  :init
+  (add-hook! 'php-mode-hook
+    (add-hook 'before-save-hook #'php-cs-fixer-before-save nil t)))
 
 ;;
 ;; Projects
