@@ -35,3 +35,18 @@ if phpctags isn't installed."
          (message "Could not find phpctags executable, eldoc support is disabled")
          (message "To disable these warnings, set ac-php-ctags-executable to nil"))
         ((ac-php-core-eldoc-setup))))
+
+;;;###autoload
+(defun +phpunit-toggle-stop-on-error ()
+  "Toggle phpunit stop on error"
+  (setq phpunit-stop-on-error (not phpunit-stop-on-error)))
+
+;;;###autoload
+(defun +phpunit-toggle-stop-on-failure ()
+  "Toggle phpunit stop on failure"
+  (setq phpunit-stop-on-failure (not phpunit-stop-on-failure)))
+
+;;;###autoload
+(defun +phpunit-toggle-stop-on-skipped ()
+  "Toggle phpunit stop on skipped"
+  (setq phpunit-stop-on-skipped (not phpunit-stop-on-skipped)))
