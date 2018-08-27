@@ -8,7 +8,8 @@
 (package! phpunit :pin "fe6bc91c3b")
 ;;(phpactor :recipe (:fetcher github :repo "emacs-php/phpactor.el" :files ("*.el")))
 (package! composer)
-(package! flycheck-phpstan)
+(when (featurep! :feature syntax-checker)
+  (package! flycheck-phpstan))
 
 (when (featurep! +hack)
   (package! hack-mode :recipe (:host github :repo "hhvm/hack-mode") :pin "fd6a661b09"))

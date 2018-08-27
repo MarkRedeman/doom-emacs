@@ -62,7 +62,9 @@
          :desc "Open composer.json"          "o"  #'composer-find-json-file
          :desc "Dumpautoload"                "d"  #'composer-dump-autoload)))
 
-(def-package! flycheck-phpstan :after php-mode)
+(def-package! flycheck-phpstan
+  :when (featurep! :feature syntax-checker)
+  :after php-mode)
 
 (use-package! phpactor
   :unless (featurep! +lsp)
