@@ -8,7 +8,8 @@
 (package! php-refactor-mode)
 (package! php-cs-fixer)
 (package! phpactor :recipe (:fetcher github :repo "emacs-php/phpactor.el" :files ("*.el")))
-(package! flycheck-phpstan)
+(when (featurep! :feature syntax-checker)
+  (package! flycheck-phpstan))
 (package! phpunit)
 
 (when (featurep! +hack)
