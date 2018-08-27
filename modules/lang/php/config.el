@@ -34,7 +34,11 @@
         :prefix "t"
         "r"  #'phpunit-current-project
         "a"  #'phpunit-current-class
-        "s"  #'phpunit-current-test)
+        "s"  #'phpunit-current-test
+        (:prefix "t"
+          "e"  #'+phpunit-toggle-stop-on-error
+          "f"  #'+phpunit-toggle-stop-on-failure
+          "s"  #'+phpunit-toggle-stop-on-skip))
 
   (map! :map php-mode-map
         :localleader
