@@ -20,7 +20,6 @@
   (set-docsets! 'php-mode "PHP" "PHPUnit" "Laravel" "CakePHP" "CodeIgniter" "Doctrine_ORM")
   (set-repl-handler! 'php-mode #'php-boris)
   (set-lookup-handlers! 'php-mode :documentation #'php-search-documentation)
-  (set-formatter! 'php-mode #'php-cs-fixer-fix)
 
   (if (featurep! +lsp)
       (add-hook 'php-mode-local-vars-hook #'lsp!)
@@ -37,10 +36,6 @@
   (sp-with-modes '(php-mode)
     (sp-local-pair "<?"    "?>" :post-handlers '(("| " "SPC" "=") ("||\n[i]" "RET") ("[d2]" "p")))
     (sp-local-pair "<?php" "?>" :post-handlers '(("| " "SPC") ("||\n[i]" "RET"))))
-
-  (map! :localleader
-        :map php-mode-map
-        :desc "Fix formatting" "f" #'php-cs-fixer-fix)
 
   (map! :localleader
         :map php-mode-map
@@ -137,7 +132,13 @@
   :commands (php-cs-fixer-fix php-cs-fixer-before-save)
   :init
   (add-hook! 'php-mode-hook
-    (add-hook 'before-save-hook #'php-cs-fixer-before-save nil t)))
+    (add-hook 'before-save-hook #'php-cs-fixer-before-save nil t))
+
+  (set-formatter! 'php-mode #'php-cs-fixer-fix)
+
+  (map! :map php-mode-map
+        :localleader
+        :desc "Fix formatting" "f" #'php-cs-fixer-fix))
 
 ;;
 ;; Projects
