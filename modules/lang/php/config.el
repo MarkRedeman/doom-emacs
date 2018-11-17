@@ -26,10 +26,6 @@
 
   (map! :map php-mode-map
         :localleader
-        :desc "Fix formatting" :n "f" #'php-cs-fixer-fix)
-
-  (map! :map php-mode-map
-        :localleader
         :prefix "t"
         "r"  #'phpunit-current-project
         "a"  #'phpunit-current-class
