@@ -1,0 +1,70 @@
+#+TITLE: TODO
+
+* Figure out if we want to encourage the usage of phar.io's phive
+https://phar.io/
+https://akrabat.com/using-phive-to-manage-phpunit/
+
+Phive has two advantages
+- Phar files are run in a sandboxed environment
+- Good security: releases are signed
+
+** Add a package for phive
+
+*** Show a message when phive's dependencies need to be updated
+
+* Static Code Analyzers
+
+Emphasize docker usage
+
+** Psalm
+
+https://www.reddit.com/r/PHP/comments/5nsmcg/psalm_a_static_analysis_tool_for_php/
+
+** Phan
+
+*** https://github.com/emacs-php/phan.el
+
+Seems to only add font locking for log files
+
+*** https://github.com/TysonAndre/lsp-phan
+
+Not necessary for now.
+
+*** https://github.com/TysonAndre/flycheck-phanclient
+
+
+
+*** https://github.com/stevenremot/emacs-phan
+
+Older version of TysonAndre
+
+** Phpstan
+
+We could use the following snippet to set the working dir
+
+#+BEGIN_SRC elisp
+
+  ;; `phpactor-get-working-dir' throws stringp errors if not in a project.
+  (defun +php*project-root (&rest _)
+    (setq phpactor-working-dir
+          (or phpactor-working-dir
+              (php-project-get-root-dir)
+              (doom-project-root))))
+  (advice-add #'phpactor-get-working-dir :before #'+php*project-root)
+
+#+END_SRC
+
+
+* More tooling
+
+https://github.com/exakat/php-static-analysis-tools
+
+https://mlocati.github.io/php-cs-fixer-configurator/#fixer:return_type_declaration
+
+* phpactor
+
+** Setup Eldoc
+** Setup and improve company
+** Better keybindings
+** Configurations
+** Hydra or frogmenu for context menu?
