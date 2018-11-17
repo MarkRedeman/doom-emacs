@@ -3,3 +3,5 @@
 
 (package! julia-mode :pin "5238f9adb7")
 (package! julia-repl :pin "b11a572970")
+;; (package! flycheck-julia)
+(package! lsp-julia :recipe (:fetcher github :repo "non-Jedi/lsp-julia"))

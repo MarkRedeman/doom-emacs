@@ -19,6 +19,7 @@
 
   (set-docsets! 'php-mode "PHP" "PHPUnit" "Laravel" "CakePHP" "CodeIgniter" "Doctrine_ORM")
   (set-repl-handler! 'php-mode #'php-boris)
+  ;; (set-repl-handler! 'php-mode #'psysh)
   (set-lookup-handlers! 'php-mode :documentation #'php-search-documentation)
 
   (if (featurep! +lsp)
@@ -48,7 +49,7 @@
           "f"  #'+phpunit-toggle-stop-on-failure
           "s"  #'+phpunit-toggle-stop-on-skip))
 
-  (map! :map php-mode-map
+  (map! :map +php-composer-mode-map
         :localleader
         :prefix "c"
         :desc "Composer"
@@ -79,12 +80,19 @@
 
   (map! :localleader
         :map php-mode-map
+        :prefix "n"
+        ;; Class references
+        ;; Class Member References
+        ;; Jump to definition
+        ;; Jump to (or generate) related file
+        "n"  #'phpactor-navigate
         :prefix ("r" . "refactor")
+        "C"  #'phpactor-context-menu
         "cc" #'phpactor-copy-class
-        "mc" #'phpactor-move-class
+        "cm" #'phpactor-move-class
         "oi" #'phpactor-offset-info
         "t"  #'phpactor-transform
-        "ic" #'phpactor-import-class))
+        "ci" #'phpactor-import-class))
 
 
 (def-package! company-phpactor :after php-mode :unless (featurep! +lsp))
@@ -128,6 +136,17 @@
     (add-hook 'before-save-hook #'php-cs-fixer-before-save nil t))
 
   (set-formatter! 'php-mode #'php-cs-fixer-fix)
+
+
+  ;; TODO
+  ;; use advice to rewrite build-rules-options so that the
+  ;; php-cs-fixer-config-option is set based on current projectile settings
+  ;; that is, try to find a .php_cs.dist file or simliar in the current project.
+  ;; If no file can be found look for a file in the current dir and upward.
+  ;; If still no file can be found, try looking for it in .doom.d, otherwise
+  ;; don't change it and assume the fixer settings have been configured
+  ;; php-cs-fixer--build-rules-options
+  ;; phpstan does something similar so we should check that...
 
   (map! :map php-mode-map
         :localleader

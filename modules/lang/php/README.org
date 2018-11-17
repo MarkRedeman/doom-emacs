@@ -8,6 +8,7 @@ This module adds support for PHP 5.3+ (including PHP7).
 + Code refactoring commands (~php-refactor-mode~)
 + Unit-test commands (~phpunit~)
 + Static analysis ([[https://github.com/emacs-php/phpstan.el][phpstan]])
++ Composer
 + Support for ~laravel~ and ~composer~ projects (with project-specific snippets)
 + [[../../editor/file-templates/templates/php-mode][File templates]]
 + [[https://github.com/hlissner/doom-snippets/tree/master/php-mode][Snippets]]
@@ -22,6 +23,39 @@ Save a programmer today. Stop a friend from choosing PHP as their first language
 - [[#install][Install]]
   - [[#php][PHP]]
   - [[#dependencies][Dependencies]]
+- [[#php-1][PHP]]
+  - [[#configutation][Configutation]]
+- [[#composer][Composer]]
+  - [[#keybindings][Keybindings]]
+- [[#formatting-php-cs-fixer][Formatting (php-cs-fixer)]]
+  - [[#instalation][Instalation]]
+  - [[#configuration][Configuration]]
+  - [[#troubleshooting][Troubleshooting]]
+- [[#phpstan-static-analysis][PHPStan (Static analysis)]]
+  - [[#installation][Installation]]
+- [[#phpactor-refactoring-and-completion][PHPactor (Refactoring and completion)]]
+  - [[#configuration-1][Configuration]]
+  - [[#keybindings-1][Keybindings]]
+- [[#testing-phpunit][Testing (PHPUnit)]]
+  - [[#configuration-2][Configuration]]
+  - [[#keybindings-2][Keybindings]]
+  - [[#run-tests-associated-to-current-file][Run tests associated to current file]]
+  - [[#open-test-file-of-current-file][Open test file of current file]]
+  - [[#show-code-coverage-of-current-file][Show code coverage of current file]]
+- [[#phive][Phive]]
+- [[#repl][REPL]]
+- [[#future][Future]]
+  - [[#phan][Phan]]
+  - [[#psalm][Psalm]]
+  - [[#php-auto-yasnippets][PHP Auto Yasnippets]]
+  - [[#debugging-with-geben][Debugging (with Geben?)]]
+  - [[#psysh][Psysh]]
+  - [[#php-security-checker][PHP Security Checker]]
+  - [[#ide-helper][IDE Helper]]
+  - [[#docblock-generator][Docblock generator]]
+  - [[#snippets][Snippets]]
+- [[#helper-functions][Helper functions]]
+- [[#phpstorm-inspections-for-your-continuous-integration-process][PHPStorm Inspections for your Continuous Integration Process]]
 
 * Install
 ** PHP
@@ -66,3 +100,281 @@ Ensure that ~\~/.composer/vendor/bin~ is in ~PATH~:
 # place this in your profile file, like ~/.bash_profile or ~/.zshenv
 export PATH="~/.composer/vendor/bin:$PATH"
 #+END_SRC
+
+* PHP
+
+This module adds support for PHP7, though it should also work for php 5.3+.
+If you've enabled the =syntax-checker= module you'll automatically get syntax
+checking for php if php is intalled.
+In addition the [[phpstan]] can be used to enable static analysis on php files
+through flycheck.
+
+** Configutation
+
+You can set various coding styles using the functions,
+
+- `php-enable-pear-coding-style`
+- `php-enable-drupal-coding-style`
+- `php-enable-wordpress-coding-style`
+- `php-enable-symfony2-coding-style`
+- `php-enable-psr2-coding-style`
+
+For instance if you'd like to enable =psr2= style, add the following snippet to
+your =.doom/config.el=,
+
+#+BEGIN_SRC elisp
+(after! php-mode
+  (setq-default php-cs-fixer-rules-level-part-options '("@PSR2"))
+  (add-hook 'php-mode-hook 'php-enable-psr2-coding-style))
+#+END_SRC
+
+* Composer
+
+Composer is PHP's dependency manager. Check [[https://getcomposer.org/download/][composer]]'s download page for
+installation instructions.
+Once you've installed composer it is convenient to add the =vendor/bin= folder
+(commonly located in =~/.config/composer/vendor/bin= or
+=~/.composer/vendor/bin=) to your =$PATH= since this allows you to run globally
+installed composer packages.
+
+** Keybindings
+
+The following keybindings are available under the =:localleader=
+
+| key   | command                           |
+|-------+-----------------------------------|
+| "c C" | `composer`                        |
+| "c o" | `composer-find-json-file`         |
+| "c c" | `composer-run-vendor-bin-command` |
+| "c s" | `composer-run-script`             |
+| "c i" | `composer-intall`                 |
+| "c r" | `composer-require`                |
+| "c u" | `composer-update`                 |
+| "c d" | `composer-dump-autoload`          |
+
+* Formatting (php-cs-fixer)
+
+You can use [[https://github.com/OVYA/php-cs-fixer][=php-cs-fixer=]] to automatically format your code. Doom has been
+configured so that it automatically formats a PHP file after you've saved the
+file, given that you've installed =php-cs-fixer=.
+
+Once setup you can use the keybinding =SPC m f= to format the current buffer.
+
+** Instalation
+
+The easiest way to isntall cs fixer is to use composer,
+
+#+BEGIN_SRC sh
+composer global require friendsofphp/php-cs-fixer
+#+END_SRC
+
+Alternatively you can use one of the installation methods described at [[https://github.com/FriendsOfPHP/PHP-CS-Fixer#installation][PHP-CS-Fixer/installation]].
+
+** Configuration
+
+| name                                    | description                                         |
+|-----------------------------------------+-----------------------------------------------------|
+| `php-cs-fixer-command`                  | Change the executable used by `php-cs-fixer`        |
+| `php-cs-fixer-config-option`            | Use a configuration file for `php-cs-fixer` optoins |
+| `php-cs-fixer-rules-level-part-options` | Set the rules i.e. @PSR1, @PSR2 etc. option         |
+| `php-cs-fixer-rules-fixer-part-options` | Choose exact use to use                             |
+
+Note that the =php-cs-fixer-rules-level-part-options= and =php-cs-fixer-rules-fixer-part-options= variables expects a list,
+
+#+BEGIN_SRC elisp
+(after! php-mode
+  (setq-default php-cs-fixer-rules-level-part-options '("@PSR2" "@PSR1")
+                php-cs-fixer-rules-fixer-part-options '("protected_to_private" "final_internal_class")))
+#+END_SRC
+
+If you have a project with a specific configuration you can set
+=php-cs-fixer-config-option= a =.dir-locals.el= file,
+
+#+BEGIN_SRC elisp
+((php-mode . ((php-cs-fixer-config-option . "./phpcs.xml"))))
+#+END_SRC
+
+*** TODO Find configuration file or set to nil
+
+We could use advice functions to change php-cs-fixer-fix so that it will first
+look for project specific settings.
+
+** TODO Troubleshooting
+
+- If a rule is used that is not supported by php-cs-fixer, it will silently fail.
+
+* PHPStan (Static analysis)
+
+Doom comes with [[https://github.com/emacs-php/phpstan.el/pulls][phpstan.el]] which provides integration of [[https://github.com/emacs-php/phpstan.el/pulls][PHPStan]] with flycheck.
+
+** Installation
+
+The easiest way to get started with phpstan is to install globally install [[https://packagist.org/packages/phpstan/phpstan-shim][phpstan-shim]] using composer,
+#+BEGIN_SRC sh
+composer global require phpstan/phpstan-shim
+#+END_SRC
+
+alternatively you can install phpstan locally per project or use Docker. See the
+documentation of [[https://github.com/emacs-php/phpstan.el#how-to-install][phpstan.el]] for instructions.
+
+Phpstan is enabled if either the =phpstan-working-dir=
+To enable phpstan you'll have to have a =phpstan.neon= configuration file or set
+the =phpstan-working-dir= which you can set using the =.dir-locals.el= file,
+
+#+BEGIN_SRC elisp
+((nil . ((phpstan-working-dir . (root . ".")))))
+#+END_SRC
+
+*** Using a Docker installation
+
+For additional configuration options see [[https://github.com/emacs-php/phpstan.el][phpstan.el]].
+
+* PHPactor (Refactoring and completion)
+
+** Configuration
+
+** Keybindings
+
+* Testing (PHPUnit)
+
+You can use [[https://github.com/nlamirault/phpunit.el][phpunit.el]] to run your unit tests from inside emacs.
+
+** Configuration
+
+#+BEGIN_SRC
+(setq phpunit-configuration-file "phpunit.xml")
+(setq phpunit-root-directory "./")
+
+(defcustom phpunit-stop-on-error nil
+  "Stop execution upon first error."
+  :type 'boolean)
+
+(defcustom phpunit-stop-on-failure nil
+  "Stop execution upon first error or failure."
+  :type 'boolean)
+
+(defcustom phpunit-stop-on-skipped nil
+  "Stop execution upon first skipped test."
+  :type 'boolean)
+
+(defcustom phpunit-verbose-mode nil
+  "Display debugging information during test execution."
+  :type 'boolean)
+
+(defcustom phpunit-configuration-file nil
+  "The PHPUnit configuration file."
+  :type '(choice (file  :tag "Path to phpunit.xml[.dist]")
+                 (const :tag "Automatically detect the path of phpunit.xml" nil)))
+
+(defcustom phpunit-bootstrap-file nil
+  "The PHPUnit bootstrap file."
+  :type '(choice (file  :tag "Path to PHPUnit bootstrap script")
+                 (const :tag "Not specify boostrap script" nil)))
+
+(defcustom phpunit-colorize nil
+  "Colorize PHPUnit compilation output buffer."
+  :type '(choice (const :tag "Do not specific --color argument" nil)
+                 (const :tag "--color=auto" "auto")
+                 (const :tag "--color=never" "never")
+                 (const :tag "--color=always" "always")))
+
+(defcustom phpunit-hide-compilation-buffer-if-all-tests-pass nil
+  "Hide the compilation buffer if all tests pass."
+  :type 'boolean
+:group 'phpunit)
+#+END_SRC
+
+** Keybindings
+
+In addition to [[https://github.com/nlamirault/phpunit.el#available-commands][phpunit.el]]'s keybindings Doom's configured the follow keybindings
+when in a PHP project under the =:localleader=,
+
+| key     | command                           | description                                              |
+|---------+-----------------------------------+----------------------------------------------------------|
+| "t r"   | `phpunit-current-project`         | Launch all unit tests                                    |
+| "t a"   | `phpunit-current-class`           | Launch unit tests for current test class                 |
+| "t s"   | `phpunit-current-test`            | Launch unit tests for the current method in a test class |
+| "t g"   | `phpunit-group`                   | Select and launch all unit tests in a group              |
+| "t t e" | `+phpunit-toggle-stop-on-error`   |                                                          |
+| "t t f" | `+phpunit-toggle-stop-on-failure` |                                                          |
+| "t t s" | `+phpunit-toggle-stop-on-skipped` |                                                          |
+
+After using =phpunit-group= once you can use =C-u SPC m t g= to rerun the tests
+for that group.
+
+** TODO Run tests associated to current file
+
+Either guess by filename i.e. Email -> EmailTest.php
+Use code coverage
+
+** TODO Open test file of current file
+
+** TODO Show code coverage of current file
+
+* Phive
+
+The PHAR Installation and Verification Environment (PHIVE) is a tool that you
+can use to download and install php tools such as php-cs-fixer.
+https://akrabat.com/using-phive-to-manage-phpunit/
+https://phar.io/#Usage
+
+* REPL
+
+
+* Future
+
+More static analyzers?
+More refactoring tools
+
+** Phan
+
+Run phan:
+https://github.com/stevenremot/emacs-phan
+
+Phan mode for looking at output:
+https://github.com/emacs-php/phan.el
+
+** Psalm
+https://www.reddit.com/r/PHP/comments/5nsmcg/psalm_a_static_analysis_tool_for_php/
+
+#+BEGIN_SRC
+(require 'compile)
+(defun my-php-hook-function ()
+ (set (make-local-variable 'compile-command) (format "path/to/psalm --output-format=emacs %s" (buffer-file-name))))
+(add-hook 'php-mode-hook 'my-php-hook-function)
+
+#+END_SRC
+** PHP Auto Yasnippets
+https://github.com/emacs-php/php-auto-yasnippets
+
+** Debugging (with Geben?)
+
+https://github.com/ksjogo/spacemacs-geben
+https://github.com/ksjogo/geben-helm-projectile/blob/master/geben-helm-projectile.el
+
+** Psysh
+
+** PHP Security Checker
+
+https://github.com/sensiolabs/security-checker
+
+https://github.com/Roave/SecurityAdvisories
+
+** IDE Helper
+
+Would be nice to have keybindings that apply IDE helper on a
+- project
+- folder
+- (current) file
+** Docblock generator
+
+** Snippets
+https://github.com/fgallina/dotemacs/blob/master/snippets/php-mode/Start%20Docblock
+
+
+* Helper functions
+
++php/copy-fqcn
+
+* PHPStorm Inspections for your Continuous Integration Process
+https://www.christianscheb.de/archives/808#comment-38874

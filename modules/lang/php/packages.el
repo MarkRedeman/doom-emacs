@@ -8,10 +8,13 @@
 (package! phpunit :pin "fe6bc91c3b")
 ;;(phpactor :recipe (:fetcher github :repo "emacs-php/phpactor.el" :files ("*.el")))
 (package! composer)
-(package! flycheck-phanclient :recipe (:fetcher github :repo "TysonAndre/flycheck-phanclient"))
+(package! psysh)
+(package! composer)
 
-(when (featurep! :feature syntax-checker)
-  (package! flycheck-phpstan))
+(when (featurep! :checkers syntax)
+  (package! flycheck-phpstan)
+  (package! flycheck-phanclient :recipe (:fetcher github :repo "TysonAndre/flycheck-phanclient")))
+(package! phpunit)
 
 (when (featurep! +hack)
   (package! hack-mode :recipe (:host github :repo "hhvm/hack-mode") :pin "fd6a661b09"))

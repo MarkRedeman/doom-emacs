@@ -17,6 +17,8 @@
 (package! skewer-mode :pin "123215dd9b")
 (package! jest)
 (package! vue-mode)
+;; mocha.el? https://github.com/scottaj/mocha.el
+;; jest-coverage https://github.com/jcubic/jest-coverage.el
 
 ;; Programming environment
 (package! tide :pin "1878a097fc")
