@@ -15,6 +15,8 @@
 (package! skewer-mode)
 (package! jest)
 (package! vue-mode)
+;; mocha.el? https://github.com/scottaj/mocha.el
+;; jest-coverage https://github.com/jcubic/jest-coverage.el
 
 (when (featurep! :feature lookup)
   (package! xref-js2))
