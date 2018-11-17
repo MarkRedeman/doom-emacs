@@ -7,7 +7,9 @@
 (package! composer)
 (package! php-refactor-mode)
 (package! php-cs-fixer)
-(package! phpactor :recipe (:fetcher github :repo "emacs-php/phpactor.el" :files ("*.el")))
+(package! phpactor)
+(package! company-phpactor)
+
 (when (featurep! :feature syntax-checker)
   (package! flycheck-phpstan))
 (package! phpunit)
