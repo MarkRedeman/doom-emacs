@@ -83,6 +83,7 @@
         "t"  #'phpactor-transform
         "ic" #'phpactor-import-class))
 
+(def-package! company-phpactor :after php-mode)
 
 (use-package! php-refactor-mode
   :hook php-mode
