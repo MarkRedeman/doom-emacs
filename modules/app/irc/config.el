@@ -123,19 +123,28 @@ playback.")
   ;; Fail gracefully if not in a circe buffer
   (global-set-key [remap tracking-next-buffer] #'+irc/tracking-next-buffer)
 
-  (map! :localleader
-        (:map circe-mode-map
-          "a" #'tracking-next-buffer
-          "j" #'circe-command-JOIN
-          "m" #'+irc/send-message
-          "p" #'circe-command-PART
-          "Q" #'+irc/quit
-          "R" #'circe-reconnect
-          (:when (featurep! :completion ivy)
-            "c" #'+irc/ivy-jump-to-channel))
-        (:map circe-channel-mode-map
-          "n" #'circe-command-NAMES)))
+  (map!
+   :localleader
+     (:map circe-mode-map
+       "a" #'tracking-next-buffer
+       "j" #'circe-command-JOIN
+       "m" #'+irc/send-message
+       "p" #'circe-command-PART
+       "Q" #'+irc/quit
+       "R" #'circe-reconnect
 
+       (:when (featurep! :completion ivy)
+         "c" #'+irc/ivy-jump-to-channel)
+       (:when (featurep! :completion helm)
+         "h" #'helm-circe
+         "c" #'helm-circe-channels
+         "s" #'helm-circe-servers
+         "S" #'helm-circe-by-server
+         "q" #'helm-circe-queries
+         "A" #'helm-circe-new-activity))
+
+     (:map circe-channel-mode-map
+       :desc "Show names" "n" #'circe-command-NAMES)))
 
 (use-package! circe-color-nicks
   :hook (circe-channel-mode . enable-circe-color-nicks)
