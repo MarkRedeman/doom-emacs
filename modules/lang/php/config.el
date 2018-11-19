@@ -52,6 +52,10 @@
   :when (featurep! :feature syntax-checker)
   :after php-mode)
 
+(def-package! flycheck-phanclient
+  :when (featurep! :feature syntax-checker)
+  :after php-mode)
+
 (def-package! phpactor
   :unless (featurep! +lsp)
   :after php-mode

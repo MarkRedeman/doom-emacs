@@ -9,6 +9,7 @@
 (package! php-cs-fixer)
 (package! phpactor)
 (package! company-phpactor)
+(package! flycheck-phanclient :recipe (:fetcher github :repo "TysonAndre/flycheck-phanclient"))
 
 (when (featurep! :feature syntax-checker)
   (package! flycheck-phpstan))
