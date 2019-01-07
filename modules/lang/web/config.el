@@ -7,7 +7,7 @@
 (def-package! emmet-mode
   :commands emmet-mode
   :preface (defvar emmet-mode-keymap (make-sparse-keymap))
-  :hook (css-mode web-mode html-mode haml-mode nxml-mode rjsx-mode reason-mode)
+  :hook ((css-mode web-mode html-mode haml-mode nxml-mode rjsx-mode reason-mode) . emmet-mode)
   :config
   (when (require 'yasnippet nil t)
     (add-hook 'emmet-mode-hook #'yas-minor-mode-on))
