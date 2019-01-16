@@ -13,6 +13,7 @@
 (package! nodejs-repl)
 (package! npm-mode)
 (package! skewer-mode)
+(package! jest)
 
 (when (featurep! :feature lookup)
   (package! xref-js2))
