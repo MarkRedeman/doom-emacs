@@ -15,6 +15,7 @@
 ;; Eval
 (package! nodejs-repl :pin "8b90948265")
 (package! skewer-mode :pin "123215dd9b")
+(package! jest)
 
 ;; Programming environment
 (package! tide :pin "1878a097fc")

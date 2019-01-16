@@ -282,6 +282,18 @@ to tide."
           :localleader
           (:prefix ("n" . "npm")))))
 
+;; Jest
+(def-package! jest
+  :defer t
+  :init
+  (map! :after js2-mode-map
+        :localleader
+        :map
+        :prefix "t"
+        "f" #'jest-file
+        "k" #'jest-file-dwim
+        "m" #'jest-repeat
+        "p" #'jest-popup))
 
 ;;
 ;;; Projects
