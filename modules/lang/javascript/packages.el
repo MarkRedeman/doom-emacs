@@ -14,6 +14,7 @@
 (package! npm-mode)
 (package! skewer-mode)
 (package! jest)
+(package! vue-mode)
 
 (when (featurep! :feature lookup)
   (package! xref-js2))

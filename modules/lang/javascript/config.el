@@ -250,6 +250,8 @@
         "m" #'jest-repeat
         "p" #'jest-popup))
 
+(def-package! vue-mode)
+
 ;;
 ;; Projects
 
