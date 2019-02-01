@@ -8,7 +8,9 @@
 available and installed, or `php-extras-company' otherwise."
   (cond ((and (require 'company-phpactor nil t)
               (ignore-errors (phpactor-find-executable)))
-         (company-phpactor command arg))
+         (cl-case command
+           (sorted t)
+           (t (company-phpactor command arg))))
         ((and (require 'php-extras nil t)
               (file-exists-p (concat php-extras-eldoc-functions-file ".el")))
          (php-extras-company command arg))))
