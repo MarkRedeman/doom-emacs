@@ -9,16 +9,17 @@
 ;;(phpactor :recipe (:fetcher github :repo "emacs-php/phpactor.el" :files ("*.el")))
 (package! composer)
 (package! flycheck-phanclient :recipe (:fetcher github :repo "TysonAndre/flycheck-phanclient"))
+
 (when (featurep! :feature syntax-checker)
   (package! flycheck-phpstan))
 
 (when (featurep! +hack)
   (package! hack-mode :recipe (:host github :repo "hhvm/hack-mode") :pin "fd6a661b09"))
 
+(package! phpactor :pin "5ccf65d59e")
 (unless (featurep! +lsp)
-  (package! phpactor :pin "5ccf65d59e")
   (when (featurep! :completion company)
-    (package! company-phpactor :pin "5ccf65d59e")))
+    (package! company-phpactor)))
 
 (when (featurep! :editor format)
   (package! php-cs-fixer :pin "6540006710"))

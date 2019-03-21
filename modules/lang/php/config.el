@@ -15,7 +15,7 @@
   :config
   ;; Disable HTML compatibility in php-mode. `web-mode' has superior support for
   ;; php+html. Use the .phtml
-  (setq php-template-compatibility nil)
+  (setq php-mode-template-compatibility nil)
 
   (set-docsets! 'php-mode "PHP" "PHPUnit" "Laravel" "CakePHP" "CodeIgniter" "Doctrine_ORM")
   (set-repl-handler! 'php-mode #'php-boris)
@@ -70,7 +70,6 @@
   :after php-mode)
 
 (def-package! phpactor
-  :unless (featurep! +lsp)
   :after php-mode
   :init
   (add-to-list '+php--company-backends #'company-phpactor nil 'eq)
@@ -87,19 +86,8 @@
         "t"  #'phpactor-transform
         "ic" #'phpactor-import-class))
 
-(def-package! company-phpactor :after php-mode)
 
-(use-package! php-refactor-mode
-  :hook php-mode
-  :config
-  (map! :localleader
-        :map php-refactor-mode-map
-        :prefix "r"
-        "cv" #'php-refactor--convert-local-to-instance-variable
-        "u"  #'php-refactor--optimize-use
-        "xm" #'php-refactor--extract-method
-        "rv" #'php-refactor--rename-local-variable))
-
+(def-package! company-phpactor :after php-mode :unless (featurep! +lsp))
 
 (use-package! php-extras
   :after php-mode
