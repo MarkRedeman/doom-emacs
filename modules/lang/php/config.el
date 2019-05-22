@@ -63,11 +63,11 @@
          :desc "Dumpautoload"                "d"  #'composer-dump-autoload)))
 
 (def-package! flycheck-phpstan
-  :when (featurep! :feature syntax-checker)
+  :when (featurep! :tools flycheck)
   :after php-mode)
 
 (def-package! flycheck-phanclient
-  :when (featurep! :feature syntax-checker)
+  :when (featurep! :tools flycheck)
   :after php-mode)
 
 (def-package! phpactor

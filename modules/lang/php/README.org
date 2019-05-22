@@ -56,6 +56,10 @@ Save a programmer today. Stop a friend from choosing PHP as their first language
   - [[#snippets][Snippets]]
 - [[#helper-functions][Helper functions]]
 - [[#phpstorm-inspections-for-your-continuous-integration-process][PHPStorm Inspections for your Continuous Integration Process]]
+- [[#references][References]]
+- [[#templates][Templates]]
+- [[#test-explorer][Test explorer]]
+- [[#language-servers][Language servers]]
 
 * Install
 ** PHP
@@ -104,7 +108,7 @@ export PATH="~/.composer/vendor/bin:$PATH"
 * PHP
 
 This module adds support for PHP7, though it should also work for php 5.3+.
-If you've enabled the =syntax-checker= module you'll automatically get syntax
+If you've enabled the =flycheck= module you'll automatically get syntax
 checking for php if php is intalled.
 In addition the [[phpstan]] can be used to enable static analysis on php files
 through flycheck.
@@ -336,6 +340,7 @@ https://github.com/emacs-php/phan.el
 
 ** Psalm
 https://www.reddit.com/r/PHP/comments/5nsmcg/psalm_a_static_analysis_tool_for_php/
+https://spacevim.org/use-vim-as-a-php-ide/
 
 #+BEGIN_SRC
 (require 'compile)
@@ -378,3 +383,20 @@ https://github.com/fgallina/dotemacs/blob/master/snippets/php-mode/Start%20Docbl
 
 * PHPStorm Inspections for your Continuous Integration Process
 https://www.christianscheb.de/archives/808#comment-38874
+
+* References
+https://github.com/kermorgant/.emacs.d/blob/5bb4de0575a05c756b17520b07e98de644bc6d9a/lang/mk-php.el#L5
+
+* Templates
+https://marijn.huizendveld.com/blog/live-templates-in-phpstorm#article
+
+* Test explorer
+
+https://marketplace.visualstudio.com/items?itemName=hbenl.vscode-test-explorer
+https://github.com/recca0120/vscode-phpunit
+
+* Language servers
+
+https://gitlab.com/Serenata/Serenata
+psalm
+https://github.com/bmewburn/vscode-intelephense
