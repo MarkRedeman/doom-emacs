@@ -13,7 +13,7 @@
 
 (when (featurep! :checkers syntax)
   (package! flycheck-phpstan)
-  (package! flycheck-phanclient :recipe (:fetcher github :repo "TysonAndre/flycheck-phanclient")))
+  (package! flycheck-phanclient :recipe (:host github :repo "TysonAndre/flycheck-phanclient")))
 (package! phpunit)
 
 (when (featurep! +hack)
