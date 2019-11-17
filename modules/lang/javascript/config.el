@@ -283,7 +283,7 @@ to tide."
           (:prefix ("n" . "npm")))))
 
 ;; Jest
-(def-package! jest
+(use-package! jest
   :defer t
   :init
   (map! :after js2-mode-map
@@ -295,7 +295,7 @@ to tide."
         "m" #'jest-repeat
         "p" #'jest-popup))
 
-(def-package! vue-mode)
+(use-package! vue-mode)
 
 ;;
 ;;; Projects

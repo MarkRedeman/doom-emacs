@@ -62,15 +62,15 @@
          :desc "Open composer.json"          "o"  #'composer-find-json-file
          :desc "Dumpautoload"                "d"  #'composer-dump-autoload)))
 
-(def-package! flycheck-phpstan
+(use-package! flycheck-phpstan
   :when (featurep! :tools flycheck)
   :after php-mode)
 
-(def-package! flycheck-phanclient
+(use-package! flycheck-phanclient
   :when (featurep! :tools flycheck)
   :after php-mode)
 
-(def-package! phpactor
+(use-package! phpactor
   :after php-mode
   :init
   (add-to-list '+php--company-backends #'company-phpactor nil 'eq)
@@ -95,7 +95,7 @@
         "ci" #'phpactor-import-class))
 
 
-(def-package! company-phpactor :after php-mode :unless (featurep! +lsp))
+(use-package! company-phpactor :after php-mode :unless (featurep! +lsp))
 
 (use-package! php-extras
   :after php-mode
@@ -128,7 +128,7 @@
   :when (featurep! +hack)
   :mode "\\.hh$")
 
-(def-package! php-cs-fixer
+(use-package! php-cs-fixer
   :after php-mode
   :commands (php-cs-fixer-fix php-cs-fixer-before-save)
   :init

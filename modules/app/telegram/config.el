@@ -6,7 +6,7 @@
   (telega-server--send (list :@type "readAllChatMentions"
      :chat_id (plist-get telega-chatbuf--chat :id))))
 
-(def-package! telega
+(use-package! telega
   :commands (telega)
   :config
 
