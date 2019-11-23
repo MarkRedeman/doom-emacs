@@ -13,6 +13,12 @@
 (use-package! php-mode
   :mode "\\.inc\\'"
   :config
+  (with-eval-after-load 'php-mode
+    (define-key php-mode-map ";" nil)
+    (define-key php-mode-map "(" nil)
+    (define-key php-mode-map ")" nil)
+    (define-key php-mode-map "}" nil)
+    (define-key php-mode-map "{" nil))
   ;; Disable HTML compatibility in php-mode. `web-mode' has superior support for
   ;; php+html. Use the .phtml
   (setq php-mode-template-compatibility nil)
