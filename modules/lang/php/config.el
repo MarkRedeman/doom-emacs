@@ -21,11 +21,10 @@
     (define-key php-mode-map "{" nil))
   ;; Disable HTML compatibility in php-mode. `web-mode' has superior support for
   ;; php+html. Use the .phtml
-  (setq php-mode-template-compatibility nil)
+  (setq php-template-compatibility nil)
 
   (set-docsets! 'php-mode "PHP" "PHPUnit" "Laravel" "CakePHP" "CodeIgniter" "Doctrine_ORM")
   (set-repl-handler! 'php-mode #'php-boris)
-  ;; (set-repl-handler! 'php-mode #'psysh)
   (set-lookup-handlers! 'php-mode :documentation #'php-search-documentation)
 
   (if (featurep! +lsp)
@@ -77,6 +76,7 @@
   :after php-mode)
 
 (use-package! phpactor
+  :unless (featurep! +lsp)
   :after php-mode
   :init
   (add-to-list '+php--company-backends #'company-phpactor nil 'eq)
@@ -101,7 +101,7 @@
         "ci" #'phpactor-import-class))
 
 
-(use-package! company-phpactor :after php-mode :unless (featurep! +lsp))
+;; (use-package! company-phpactor :after php-mode :unless (featurep! +lsp))
 
 (use-package! php-extras
   :after php-mode

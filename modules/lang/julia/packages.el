@@ -3,5 +3,6 @@
 
 (package! julia-mode :pin "5238f9adb7")
 (package! julia-repl :pin "b11a572970")
+;; (package! julia-mode :recipe (:host github :repo "non-Jedi/julia-emacs" :branch "julia-mode-latexsubs_feature"))
 ;; (package! flycheck-julia)
-(package! lsp-julia :recipe (:host github :repo "non-Jedi/lsp-julia"))
+(package! lsp-julia)
