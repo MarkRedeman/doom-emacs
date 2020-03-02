@@ -9,7 +9,6 @@
 ;;(phpactor :recipe (:fetcher github :repo "emacs-php/phpactor.el" :files ("*.el")))
 (package! composer)
 (package! psysh)
-(package! phpunit)
 
 (when (featurep! :checkers syntax)
   (package! flycheck-phpstan)
