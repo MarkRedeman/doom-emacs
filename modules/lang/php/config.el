@@ -21,7 +21,7 @@
     (define-key php-mode-map "{" nil))
   ;; Disable HTML compatibility in php-mode. `web-mode' has superior support for
   ;; php+html. Use the .phtml
-  (setq php-template-compatibility nil)
+  (setq php-mode-template-compatibility nil)
 
   (set-docsets! 'php-mode "PHP" "PHPUnit" "Laravel" "CakePHP" "CodeIgniter" "Doctrine_ORM")
   (set-repl-handler! 'php-mode #'php-boris)
